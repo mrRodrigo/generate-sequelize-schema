@@ -1,4 +1,4 @@
-## Gerating Sequelize schema by user interface
+## Generating Sequelize schema by user interface
 
 First try!
 
