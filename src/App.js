@@ -1,6 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
 import Table from "./components/Table/Table";
+import Sequelize from "./lib/Sequelize";
 
 function App() {
   const [tables, setTables] = useState([]);
@@ -18,7 +19,13 @@ function App() {
   };
 
   const generate = () => {
-    console.log(tablesData)
+    const code = Sequelize(tablesData);
+    const element = document.createElement("a");
+    const file = new Blob([code], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "model.js";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
   };
 
   return (
