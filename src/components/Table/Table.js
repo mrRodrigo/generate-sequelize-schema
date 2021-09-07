@@ -9,9 +9,9 @@ function Table(props) {
   const [tableName, setTableName] = useState("table");
 
   const [tableFields, setTableFields] = useState([
-    { name: "name", type: "varchar", allowNull: "false", unique: "true" },
-    { name: "name", type: "varchar", allowNull: "false", unique: "false" },
-    { name: "name", type: "varchar", allowNull: "false", unique: "false" },
+    { name: "example", type: "varchar", allowNull: "false", unique: "true" },
+    { name: "example", type: "varchar", allowNull: "false", unique: "false" },
+    { name: "example", type: "varchar", allowNull: "false", unique: "false" },
   ]);
 
   const addColumn = () => {
@@ -19,7 +19,7 @@ function Table(props) {
       ...old,
       { name: "name", type: "varchar", allowNull: "false" },
     ]);
-    props.setTableData({ id, name: tableName, columns: tableFields });
+    props.setTableData({ id, tableName, columns: tableFields });
   };
 
   const changeColumnField = (event, index, field) => {
@@ -27,12 +27,12 @@ function Table(props) {
       old[index][field] = event;
       return [...old];
     });
-    props.setTableData({ id, name: tableName, columns: tableFields });
+    props.setTableData({ id, tableName, columns: tableFields });
   };
 
   const updateName = (name) => {
     setTableName(name);
-    props.setTableData({ id, name: tableName, columns: tableFields });
+    props.setTableData({ id, tableName, columns: tableFields });
   };
 
   return (

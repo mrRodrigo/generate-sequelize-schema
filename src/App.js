@@ -1,31 +1,34 @@
 import "./App.css";
 import React, { useState } from "react";
 import Table from "./components/Table/Table";
-import Sequelize from "./lib/Sequelize";
+import { buildSequelizeModels } from "./lib";
 
 function App() {
   const [tables, setTables] = useState([]);
-  
+
   const [tablesData, setTablesData] = useState([]);
 
   const addTable = () =>
     setTables((old) => [...old, <Table setTableData={updateTableData} />]);
 
   const updateTableData = (data) => {
-    setTablesData(prev => {
-      const stay = prev.filter(({ id }) => id !== data.id)
-      return [...stay, data]
+    setTablesData((prev) => {
+      const stay = prev.filter(({ id }) => id !== data.id);
+      return [...stay, data];
     });
   };
 
-  const generate = () => {
-    const code = Sequelize(tablesData);
+  const dispatchDownloadJSFile = (stringFile) => {
     const element = document.createElement("a");
-    const file = new Blob([code], {type: 'text/plain'});
+    const file = new Blob([stringFile], { type: "text/plain" });
     element.href = URL.createObjectURL(file);
     element.download = "model.js";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
+  };
+
+  const generate = () => {
+    dispatchDownloadJSFile(buildSequelizeModels(tablesData));
   };
 
   return (
